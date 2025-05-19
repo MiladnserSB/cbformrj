@@ -2,12 +2,12 @@ package ast.TS;
 
 import ast.ASTNode;
 
-public class MethodDeclaration implements ASTNode {
+public class TypedMethodDeclarationStatement implements ASTNode {
     private Signature signature;
     private Parameters parameters; // can be null
     private MethodBody methodBody;
 
-    public MethodDeclaration(Signature signature, Parameters parameters, MethodBody methodBody) {
+    public TypedMethodDeclarationStatement(Signature signature, Parameters parameters, MethodBody methodBody) {
         this.signature = signature;
         this.parameters = parameters;
         this.methodBody = methodBody;

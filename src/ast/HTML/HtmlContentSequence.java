@@ -3,16 +3,23 @@ package ast.HTML;
 import ast.ASTNode;
 import java.util.List;
 
-public class HtmlContent implements ASTNode {
+public class HtmlContentSequence implements ASTNode {
     private List<ASTNode> contentElements;
     private String rawContent;
 
-    public HtmlContent(List<ASTNode> contentElements, String rawContent) {
+    public HtmlContentSequence(List<ASTNode> contentElements, String rawContent) {
         this.contentElements = contentElements;
         this.rawContent = rawContent;
     }
 
+    // Add these getter methods
+    public List<ASTNode> getContentElements() {
+        return contentElements;
+    }
 
+    public String getRawContent() {
+        return rawContent;
+    }
 
     @Override
     public void prettyPrint(String indent) {

@@ -33,6 +33,13 @@ public abstract class ParsergrammarBaseVisitor<T> extends AbstractParseTreeVisit
 	 * <p>The default implementation returns the result of calling
 	 * {@link #visitChildren} on {@code ctx}.</p>
 	 */
+	@Override public T visitTsDocumentStatement(Parsergrammar.TsDocumentStatementContext ctx) { return visitChildren(ctx); }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation returns the result of calling
+	 * {@link #visitChildren} on {@code ctx}.</p>
+	 */
 	@Override public T visitClassDeclaration(Parsergrammar.ClassDeclarationContext ctx) { return visitChildren(ctx); }
 	/**
 	 * {@inheritDoc}
@@ -48,6 +55,69 @@ public abstract class ParsergrammarBaseVisitor<T> extends AbstractParseTreeVisit
 	 * {@link #visitChildren} on {@code ctx}.</p>
 	 */
 	@Override public T visitClassBody(Parsergrammar.ClassBodyContext ctx) { return visitChildren(ctx); }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation returns the result of calling
+	 * {@link #visitChildren} on {@code ctx}.</p>
+	 */
+	@Override public T visitVariableAssignmentStatement(Parsergrammar.VariableAssignmentStatementContext ctx) { return visitChildren(ctx); }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation returns the result of calling
+	 * {@link #visitChildren} on {@code ctx}.</p>
+	 */
+	@Override public T visitVoidMethodDeclarationStatement(Parsergrammar.VoidMethodDeclarationStatementContext ctx) { return visitChildren(ctx); }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation returns the result of calling
+	 * {@link #visitChildren} on {@code ctx}.</p>
+	 */
+	@Override public T visitVariableDeclarationStatement(Parsergrammar.VariableDeclarationStatementContext ctx) { return visitChildren(ctx); }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation returns the result of calling
+	 * {@link #visitChildren} on {@code ctx}.</p>
+	 */
+	@Override public T visitArrayExprOneStatement(Parsergrammar.ArrayExprOneStatementContext ctx) { return visitChildren(ctx); }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation returns the result of calling
+	 * {@link #visitChildren} on {@code ctx}.</p>
+	 */
+	@Override public T visitArrayExprTwoStatement(Parsergrammar.ArrayExprTwoStatementContext ctx) { return visitChildren(ctx); }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation returns the result of calling
+	 * {@link #visitChildren} on {@code ctx}.</p>
+	 */
+	@Override public T visitTypedMethodDeclarationStatement(Parsergrammar.TypedMethodDeclarationStatementContext ctx) { return visitChildren(ctx); }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation returns the result of calling
+	 * {@link #visitChildren} on {@code ctx}.</p>
+	 */
+	@Override public T visitConstructorDeclarationStatement(Parsergrammar.ConstructorDeclarationStatementContext ctx) { return visitChildren(ctx); }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation returns the result of calling
+	 * {@link #visitChildren} on {@code ctx}.</p>
+	 */
+	@Override public T visitSignalDeclarationStatement(Parsergrammar.SignalDeclarationStatementContext ctx) { return visitChildren(ctx); }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation returns the result of calling
+	 * {@link #visitChildren} on {@code ctx}.</p>
+	 */
+	@Override public T visitNgOnInitMethodStatement(Parsergrammar.NgOnInitMethodStatementContext ctx) { return visitChildren(ctx); }
 	/**
 	 * {@inheritDoc}
 	 *
@@ -76,6 +146,9 @@ public abstract class ParsergrammarBaseVisitor<T> extends AbstractParseTreeVisit
 	 * {@link #visitChildren} on {@code ctx}.</p>
 	 */
 	@Override public T visitComponentProperties(Parsergrammar.ComponentPropertiesContext ctx) { return visitChildren(ctx); }
+
+	public abstract ASTNode visitClassBodyStatement(Parsergrammar.ClassBodyStatementContext ctx);
+
 	/**
 	 * {@inheritDoc}
 	 *

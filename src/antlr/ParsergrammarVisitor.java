@@ -23,6 +23,12 @@ public interface ParsergrammarVisitor<T> extends ParseTreeVisitor<T> {
 	 */
 	T visitTsDocument(Parsergrammar.TsDocumentContext ctx);
 	/**
+	 * Visit a parse tree produced by {@link Parsergrammar#tsDocumentStatement}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitTsDocumentStatement(Parsergrammar.TsDocumentStatementContext ctx);
+	/**
 	 * Visit a parse tree produced by {@link Parsergrammar#classDeclaration}.
 	 * @param ctx the parse tree
 	 * @return the visitor result
@@ -40,6 +46,69 @@ public interface ParsergrammarVisitor<T> extends ParseTreeVisitor<T> {
 	 * @return the visitor result
 	 */
 	T visitClassBody(Parsergrammar.ClassBodyContext ctx);
+	/**
+	 * Visit a parse tree produced by the {@code VariableAssignmentStatement}
+	 * labeled alternative in {@link Parsergrammar#classBodyStatement}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitVariableAssignmentStatement(Parsergrammar.VariableAssignmentStatementContext ctx);
+	/**
+	 * Visit a parse tree produced by the {@code VoidMethodDeclarationStatement}
+	 * labeled alternative in {@link Parsergrammar#classBodyStatement}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitVoidMethodDeclarationStatement(Parsergrammar.VoidMethodDeclarationStatementContext ctx);
+	/**
+	 * Visit a parse tree produced by the {@code VariableDeclarationStatement}
+	 * labeled alternative in {@link Parsergrammar#classBodyStatement}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitVariableDeclarationStatement(Parsergrammar.VariableDeclarationStatementContext ctx);
+	/**
+	 * Visit a parse tree produced by the {@code ArrayExprOneStatement}
+	 * labeled alternative in {@link Parsergrammar#classBodyStatement}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitArrayExprOneStatement(Parsergrammar.ArrayExprOneStatementContext ctx);
+	/**
+	 * Visit a parse tree produced by the {@code ArrayExprTwoStatement}
+	 * labeled alternative in {@link Parsergrammar#classBodyStatement}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitArrayExprTwoStatement(Parsergrammar.ArrayExprTwoStatementContext ctx);
+	/**
+	 * Visit a parse tree produced by the {@code TypedMethodDeclarationStatement}
+	 * labeled alternative in {@link Parsergrammar#classBodyStatement}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitTypedMethodDeclarationStatement(Parsergrammar.TypedMethodDeclarationStatementContext ctx);
+	/**
+	 * Visit a parse tree produced by the {@code ConstructorDeclarationStatement}
+	 * labeled alternative in {@link Parsergrammar#classBodyStatement}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitConstructorDeclarationStatement(Parsergrammar.ConstructorDeclarationStatementContext ctx);
+	/**
+	 * Visit a parse tree produced by the {@code SignalDeclarationStatement}
+	 * labeled alternative in {@link Parsergrammar#classBodyStatement}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitSignalDeclarationStatement(Parsergrammar.SignalDeclarationStatementContext ctx);
+	/**
+	 * Visit a parse tree produced by the {@code NgOnInitMethodStatement}
+	 * labeled alternative in {@link Parsergrammar#classBodyStatement}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitNgOnInitMethodStatement(Parsergrammar.NgOnInitMethodStatementContext ctx);
 	/**
 	 * Visit a parse tree produced by {@link Parsergrammar#importStatement}.
 	 * @param ctx the parse tree
@@ -108,7 +177,7 @@ public interface ParsergrammarVisitor<T> extends ParseTreeVisitor<T> {
 	T visitSignature(Parsergrammar.SignatureContext ctx);
 	/**
 	 * Visit a parse tree produced by the {@code values}
-	 * labeled alternative in {@link Parsergrammar#htmlElementhtmlElementhtmlElementhtmlElementhtmlElementhtmlContenthtmlAttributehtmlAttributehtmlAttributehtmlAttribute}.
+	 * labeled alternative in {@link Parsergrammar#classBodyStatementclassBodyStatementclassBodyStatementclassBodyStatementclassBodyStatementclassBodyStatementclassBodyStatementclassBodyStatementclassBodyStatementhtmlElementhtmlElementhtmlElementhtmlElementhtmlElementhtmlContenthtmlAttributehtmlAttributehtmlAttributehtmlAttribute}.
 	 * @param ctx the parse tree
 	 * @return the visitor result
 	 */

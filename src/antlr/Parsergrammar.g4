@@ -6,19 +6,14 @@ ast:
 tsDocument htmlDocument cssDocument;
 
 tsDocument:
-(importStatement+ (componentDecorator | injectableDecorator) classDeclaration
-|variableAssign
-|variableDeclaration
-|methodDeclaration
-|methodvoid
-|arrayExpression1
-|arrayExpression2
-|signalDeclaration
+tsDocumentStatement*;
+
+tsDocumentStatement:
+ importStatement+ (componentDecorator | injectableDecorator) classDeclaration
+|classBodyStatement
 |methodcall
-|constructorDeclaration
-|ngOnInitMETHOD
 |objectExpression
-)*;
+;
 
 classDeclaration:
 EXPORT CLASS IDENTIFIER (implementsClause)? LBRACE classBody RBRACE ;
@@ -27,17 +22,19 @@ implementsClause:
 (IMPLEMENTS (IDENTIFIER | CROISNN))*;
 
 classBody:
-(variableAssign
-| methodvoid
-| variableDeclaration
-| arrayExpression1
-| arrayExpression2
-| methodDeclaration
-| constructorDeclaration
-| signalDeclaration
-| ngOnInitMETHOD)*;
+classBodyStatement*;
 
-
+classBodyStatement
+  : variableAssign              #VariableAssignmentStatement
+  | methodvoid                  #VoidMethodDeclarationStatement
+  | variableDeclaration         #VariableDeclarationStatement
+  | arrayExpression1            #ArrayExprOneStatement
+  | arrayExpression2            #ArrayExprTwoStatement
+  | methodDeclaration           #TypedMethodDeclarationStatement
+  | constructorDeclaration      #ConstructorDeclarationStatement
+  | signalDeclaration           #SignalDeclarationStatement
+  | ngOnInitMETHOD              #NgOnInitMethodStatement
+  ;
 //mod
 importStatement:
 IMPORT LBRACE importBody (COMMA importBody)*RBRACE FROM(STRING_LITERAL) SEMICOLON;

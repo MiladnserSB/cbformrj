@@ -3,12 +3,12 @@ package ast.TS;
 import ast.ASTNode;
 import java.util.List;
 
-public class ArrayExpression2 implements ASTNode {
+public class ArrayExprTwoStatement implements ASTNode {
     private Signature signature;
     private String type;
     private List<ASTNode> arrayElements;
 
-    public ArrayExpression2(Signature signature, String type, List<ASTNode> arrayElements) {
+    public ArrayExprTwoStatement(Signature signature, String type, List<ASTNode> arrayElements) {
         this.signature = signature;
         this.type = type;
         this.arrayElements = arrayElements;

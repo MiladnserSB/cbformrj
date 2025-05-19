@@ -1,7 +1,6 @@
 package ast.VISITOR;
 import SymanticCheck.AlreadyDefinedVariableError;
 import SymanticCheck.UndefinedMethodCall;
-import SymanticCheck.WrongTypeAssignError;
 import antlr.Lexergrammmar;
 import antlr.Parsergrammar;
 import antlr.ParsergrammarBaseVisitor;
@@ -42,56 +41,61 @@ public class programvisitor  extends ParsergrammarBaseVisitor <ASTNode> {
 
     @Override
     public ASTNode visitTsDocument(Parsergrammar.TsDocumentContext ctx) {
-        List<ASTNode> statements = new ArrayList<>();
+        List<TsDocumentStatement> statements = new ArrayList<>();
 
-        for (int i = 0; i < ctx.getChildCount(); i++) {
-            var child = ctx.getChild(i);
-
-            if (child == null) {
-                continue;
-            }
-            if (child instanceof Parsergrammar.ImportStatementContext) {
-                statements.add(visitImportStatement((Parsergrammar.ImportStatementContext) child));
-            } else if (child instanceof Parsergrammar.ComponentDecoratorContext) {
-                statements.add(visitComponentDecorator((Parsergrammar.ComponentDecoratorContext) child));
-            } else if (child instanceof Parsergrammar.InjectableDecoratorContext) {
-                statements.add(visitInjectableDecorator((Parsergrammar.InjectableDecoratorContext) child));
-            } else if (child instanceof Parsergrammar.ClassDeclarationContext) {
-                statements.add(visitClassDeclaration((Parsergrammar.ClassDeclarationContext) child));
-            } else if (child instanceof Parsergrammar.VariableAssignContext) {
-                statements.add(visitVariableAssign((Parsergrammar.VariableAssignContext) child));
-            } else if (child instanceof Parsergrammar.MethodvoidContext) {
-                statements.add(visitMethodvoid((Parsergrammar.MethodvoidContext) child));
-            } else if (child instanceof Parsergrammar.VariableDeclarationContext) {
-                statements.add(visitVariableDeclaration((Parsergrammar.VariableDeclarationContext) child));
-            } else if (child instanceof Parsergrammar.MethodDeclarationContext) {
-                statements.add(visitMethodDeclaration((Parsergrammar.MethodDeclarationContext) child));
-            } else if (child instanceof Parsergrammar.ArrayExpression1Context) {
-                statements.add(visitArrayExpression1((Parsergrammar.ArrayExpression1Context) child));
-            } else if (child instanceof Parsergrammar.ArrayExpression2Context) {
-                statements.add(visitArrayExpression2((Parsergrammar.ArrayExpression2Context) child));
-            } else if (child instanceof Parsergrammar.SignalDeclarationContext) {
-                statements.add(visitSignalDeclaration((Parsergrammar.SignalDeclarationContext) child));
-            } else if (child instanceof Parsergrammar.MethodcallContext) {
-                statements.add(visitMethodcall((Parsergrammar.MethodcallContext) child));
-            } else if (child instanceof Parsergrammar.ConstructorDeclarationContext) {
-                statements.add(visitConstructorDeclaration((Parsergrammar.ConstructorDeclarationContext) child));
-            } else if (child instanceof Parsergrammar.NgOnInitMETHODContext) {
-                statements.add(visitNgOnInitMETHOD((Parsergrammar.NgOnInitMETHODContext) child));
-            } else if (child instanceof Parsergrammar.ObjectExpressionContext) {
-                statements.add(visitObjectExpression((Parsergrammar.ObjectExpressionContext) child));
-            } else {
-                System.err.println("Warning: Unknown child type in TSDocument: " + child.getClass().getSimpleName());
+        for (Parsergrammar.TsDocumentStatementContext stmtCtx : ctx.tsDocumentStatement()) {
+            TsDocumentStatement statement = (TsDocumentStatement) visit(stmtCtx);
+            if (statement != null) {
+                statements.add(statement);
             }
         }
+
         Row row = new Row();
         row.setName("TSDocument");
         row.setType("TSDocument");
         row.setValue("TS Document with " + statements.size() + " statements");
         row.setScope("global");
         this.st.addRow("TSDocument", row);
+
         return new TsDocument(statements);
     }
+
+    @Override
+    public ASTNode visitTsDocumentStatement(Parsergrammar.TsDocumentStatementContext ctx) {
+        List<ASTNode> contents = new ArrayList<>();
+
+        if (ctx.importStatement() != null) {
+            for (var imp : ctx.importStatement()) {
+                contents.add(visit(imp));
+            }
+        }
+
+        if (ctx.componentDecorator() != null) {
+            contents.add(visit(ctx.componentDecorator()));
+        } else if (ctx.injectableDecorator() != null) {
+            contents.add(visit(ctx.injectableDecorator()));
+        }
+
+        if (ctx.classDeclaration() != null) {
+            contents.add(visit(ctx.classDeclaration()));
+        }
+
+        if (ctx.classBodyStatement() != null) {
+            contents.add(visit(ctx.classBodyStatement()));
+        }
+
+        if (ctx.methodcall() != null) {
+            contents.add(visit(ctx.methodcall()));
+        }
+
+        if (ctx.objectExpression() != null) {
+            contents.add(visit(ctx.objectExpression()));
+        }
+
+        return new TsDocumentStatement(contents);
+    }
+
+
 
 
     @Override
@@ -130,10 +134,10 @@ public class programvisitor  extends ParsergrammarBaseVisitor <ASTNode> {
     public ASTNode visitClassBody(Parsergrammar.ClassBodyContext ctx) {
         ClassBody body = new ClassBody();
 
-        for (ParseTree child : ctx.children) {
-            ASTNode node = (ASTNode) visit(child);
-            if (node != null) {
-                body.addMember(node);
+        for (Parsergrammar.ClassBodyStatementContext stmtCtx : ctx.classBodyStatement()) {
+            ClassBodyStatement statement = (ClassBodyStatement) visit(stmtCtx);
+            if (statement != null) {
+                body.addMember(statement);
             }
         }
 
@@ -146,6 +150,33 @@ public class programvisitor  extends ParsergrammarBaseVisitor <ASTNode> {
         this.st.addRow("classBody", row);
 
         return body;
+    }
+
+    @Override
+    public ASTNode visitClassBodyStatement(Parsergrammar.ClassBodyStatementContext ctx) {
+        ASTNode node = null;
+
+        if (ctx instanceof Parsergrammar.VariableAssignmentStatementContext) {
+            node = visitVariableAssignmentStatement((Parsergrammar.VariableAssignmentStatementContext) ctx);
+        } else if (ctx instanceof Parsergrammar.VoidMethodDeclarationStatementContext) {
+            node = visitVoidMethodDeclarationStatement((Parsergrammar.VoidMethodDeclarationStatementContext) ctx);
+        } else if (ctx instanceof Parsergrammar.VariableDeclarationStatementContext) {
+            node = visitVariableDeclarationStatement((Parsergrammar.VariableDeclarationStatementContext) ctx);
+        } else if (ctx instanceof Parsergrammar.ArrayExprOneStatementContext) {
+            node = visitArrayExprOneStatement((Parsergrammar.ArrayExprOneStatementContext) ctx);
+        } else if (ctx instanceof Parsergrammar.ArrayExprTwoStatementContext) {
+            node = visitArrayExprTwoStatement((Parsergrammar.ArrayExprTwoStatementContext) ctx);
+        } else if (ctx instanceof Parsergrammar.TypedMethodDeclarationStatementContext) {
+            node = visitTypedMethodDeclarationStatement((Parsergrammar.TypedMethodDeclarationStatementContext) ctx);
+        } else if (ctx instanceof Parsergrammar.ConstructorDeclarationStatementContext) {
+            node = visitConstructorDeclarationStatement((Parsergrammar.ConstructorDeclarationStatementContext) ctx);
+        } else if (ctx instanceof Parsergrammar.SignalDeclarationStatementContext) {
+            node = visitSignalDeclarationStatement((Parsergrammar.SignalDeclarationStatementContext) ctx);
+        } else if (ctx instanceof Parsergrammar.NgOnInitMethodStatementContext) {
+            node = visitNgOnInitMethodStatement((Parsergrammar.NgOnInitMethodStatementContext) ctx);
+        }
+
+        return new ClassBodyStatement(node);
     }
 
     @Override
@@ -314,7 +345,7 @@ public class programvisitor  extends ParsergrammarBaseVisitor <ASTNode> {
         Parameters parameters = ctx.parameters() != null ? (Parameters) visit(ctx.parameters()) : null;
         MethodVoidBody body = (MethodVoidBody) visit(ctx.methodvoidbody());
         int line = ctx.signature().IDENTIFIER().getSymbol().getLine();
-        MethodVoid method = new MethodVoid(signature, parameters, body);
+        VoidMethodDeclarationStatement method = new VoidMethodDeclarationStatement(signature, parameters, body);
         undefinedMethodCall = new UndefinedMethodCall(signature.getName(),line);
         Row row = new Row();
         row.setName(signature.getName());
@@ -333,7 +364,7 @@ public class programvisitor  extends ParsergrammarBaseVisitor <ASTNode> {
         String accessModifier = ctx.ACCESS() != null ? ctx.ACCESS().getText() : null;
         MethodVoidBody body = (MethodVoidBody) visit(ctx.methodvoidbody());
 
-        NgOnInitMethod method = new NgOnInitMethod(accessModifier, body);
+        NgOnInitMethodStatement method = new NgOnInitMethodStatement(accessModifier, body);
 
         Row row = new Row();
         row.setName("ngOnInit");
@@ -490,7 +521,7 @@ public class programvisitor  extends ParsergrammarBaseVisitor <ASTNode> {
         Parameters parameters = ctx.parameters() != null ? (Parameters) visit(ctx.parameters()) : null;
         MethodBody methodBody = (MethodBody) visit(ctx.methodBody());
 
-        MethodDeclaration methodDeclaration = new MethodDeclaration(signature, parameters, methodBody);
+        TypedMethodDeclarationStatement methodDeclaration = new TypedMethodDeclarationStatement(signature, parameters, methodBody);
 
 
         Row row = new Row();
@@ -573,7 +604,7 @@ public class programvisitor  extends ParsergrammarBaseVisitor <ASTNode> {
                 elements.add(element);
             }
         }
-        ArrayExpression1 arrayExpr = new ArrayExpression1(signature, elements);
+        ArrayExprOneStatement arrayExpr = new ArrayExprOneStatement(signature, elements);
 
         Row row = new Row();
         row.setName(signature.getName());
@@ -664,7 +695,7 @@ public class programvisitor  extends ParsergrammarBaseVisitor <ASTNode> {
                 elements.add(element);
             }
         }
-        ArrayExpression2 arrayExpr = new ArrayExpression2(signature, type, elements);
+        ArrayExprTwoStatement arrayExpr = new ArrayExprTwoStatement(signature, type, elements);
 
         Row row = new Row();
         row.setName(signature.getName());
@@ -690,7 +721,7 @@ public class programvisitor  extends ParsergrammarBaseVisitor <ASTNode> {
             name = ctx.IDENTIFIER(0).getText();
             type = ctx.IDENTIFIER(1).getText();
         }
-        ConstructorDeclaration constructor = new ConstructorDeclaration(access, name, type);
+        ConstructorDeclarationStatement constructor = new ConstructorDeclarationStatement(access, name, type);
 
         Row row = new Row();
         row.setName("Constructor");
@@ -711,7 +742,7 @@ public class programvisitor  extends ParsergrammarBaseVisitor <ASTNode> {
         String value = ctx.values().getText();
         int line =  ctx.signature().IDENTIFIER().getSymbol().getLine();
 
-        VariableDeclaration variableDeclaration = new VariableDeclaration(signature, type, value);
+        VariableDeclarationStatement variableDeclaration = new VariableDeclarationStatement(signature, type, value);
 
         Row row = new Row();
         row.setName(signature);
@@ -733,20 +764,9 @@ public class programvisitor  extends ParsergrammarBaseVisitor <ASTNode> {
     public ASTNode visitVariableAssign(Parsergrammar.VariableAssignContext ctx) {
         String identifier = ctx.IDENTIFIER().getText();
         String value = ctx.values().getText();
-
-
-
-
-        VariableAssign assignment = new VariableAssign(identifier, value);
-        WrongTypeAssignError wrongTypeAssignError = new WrongTypeAssignError();
+        VariableAssignmentStatement assignment = new VariableAssignmentStatement(identifier, value);
         Row row = new Row();
-        String declaredType =  st.getRow(identifier).getType();
-        String valueType = wrongTypeAssignError.getValueType(ctx.values());
-        int line = ctx.IDENTIFIER().getSymbol().getLine();
         // Check type compatibility
-        if (!wrongTypeAssignError.check(declaredType, valueType)) {
-            throw new WrongTypeAssignError("Cannot assign " + valueType + " to variable of type " + declaredType , line);
-        }
         row.setName(identifier);
         row.setType("VariableAssignment");
         row.setValue("Assigned value: " + value);
@@ -763,7 +783,7 @@ public class programvisitor  extends ParsergrammarBaseVisitor <ASTNode> {
         String argument = ctx.STRING_LITERAL().getText();
         argument = argument.substring(1, argument.length() - 1);
 
-        SignalDeclaration declaration = new SignalDeclaration(name, signalType, argument);
+        SignalDeclarationStatement declaration = new SignalDeclarationStatement(name, signalType, argument);
 
         Row row = new Row();
         row.setName(name);
@@ -1077,17 +1097,19 @@ public class programvisitor  extends ParsergrammarBaseVisitor <ASTNode> {
         } else if (ctx instanceof Parsergrammar.InterpolationElementContext interpCtx) {
             String raw = interpCtx.INTERPOLATION().getText();
 
+            // Create InterpolationElement instead of ScriptletOrSeaWs
+            InterpolationElement interpolation = new InterpolationElement(raw);
+
             Row row = new Row();
             row.setName("Interpolation_" + System.identityHashCode(raw));
-            row.setType("ScriptletOrSeaWs");
+            row.setType("InterpolationElement");
             row.setValue("Interpolation: " + raw);
             row.setScope(this.st.getCurrentScope());
             this.st.addRow(row.getName(), row);
 
-            return new ScriptletOrSeaWs(raw, false);
+            return interpolation;
         }
 
-        // Fallback
         System.err.println("Unrecognized HTML element.");
         return null;
     }
@@ -1159,11 +1181,12 @@ public class programvisitor  extends ParsergrammarBaseVisitor <ASTNode> {
                 }
             }
         }
-
-        if (ctx.htmlContent() != null && ctx.htmlContent().children != null) {
-            for (var child : ctx.htmlContent().children) {
-                ASTNode contentNode = visit(child);
-                if (contentNode != null) {
+        if (ctx.htmlContent() != null) {
+            ASTNode contentNode = visitHtmlContent(ctx.htmlContent());
+            if (contentNode != null) {
+                if (contentNode instanceof HtmlContentSequence) {
+                    content.addAll(((HtmlContentSequence) contentNode).getContentElements());
+                } else {
                     content.add(contentNode);
                 }
             }
@@ -1196,17 +1219,16 @@ public class programvisitor  extends ParsergrammarBaseVisitor <ASTNode> {
         StringBuilder rawContent = new StringBuilder();
 
         for (ParseTree child : ctx.children) {
-            if (child instanceof Parsergrammar.HtmlChardataContext chardataCtx) {
-                ASTNode textNode = visitHtmlChardata(chardataCtx);
-                if (textNode != null) {
-                    contentElements.add(textNode);
-                    rawContent.append(((HtmlCharData) textNode).getContent()).append(" ");
-                }
-            } else if (child instanceof Parsergrammar.HtmlElementContext elementCtx) {
+            if (child instanceof Parsergrammar.HtmlElementContext elementCtx) {
                 ASTNode elementNode = visitHtmlElement(elementCtx);
                 if (elementNode != null) {
                     contentElements.add(elementNode);
-                    rawContent.append("[Element] ");
+                    if (elementNode instanceof InterpolationElement) {
+                        // Special handling for interpolation if needed
+                        rawContent.append("${").append(((InterpolationElement) elementNode).getContent()).append("} ");
+                    } else {
+                        rawContent.append("[Element] ");
+                    }
                 }
             } else if (child instanceof Parsergrammar.HtmlCommentContext commentCtx) {
                 ASTNode commentNode = visitHtmlComment(commentCtx);
@@ -1242,7 +1264,7 @@ public class programvisitor  extends ParsergrammarBaseVisitor <ASTNode> {
         row.setScope(this.st.getCurrentScope());
         this.st.addRow("HTMLContent_" + this.st.getCurrentScope(), row);
 
-        return new HtmlContent(contentElements, rawContent.toString().trim());
+        return new HtmlContentSequence(contentElements, rawContent.toString().trim());
     }
 
 

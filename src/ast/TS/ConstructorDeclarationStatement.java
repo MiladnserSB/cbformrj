@@ -2,12 +2,12 @@ package ast.TS;
 
 import ast.ASTNode;
 
-public class ConstructorDeclaration implements ASTNode {
+public class ConstructorDeclarationStatement implements ASTNode {
     private String accessModifier;
     private String paramName;
     private String paramType;
 
-    public ConstructorDeclaration(String accessModifier, String paramName, String paramType) {
+    public ConstructorDeclarationStatement(String accessModifier, String paramName, String paramType) {
         this.accessModifier = accessModifier;
         this.paramName = paramName;
         this.paramType = paramType;

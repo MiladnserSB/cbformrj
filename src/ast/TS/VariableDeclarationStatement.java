@@ -2,12 +2,12 @@ package ast.TS;
 
 import ast.ASTNode;
 
-public class VariableDeclaration implements ASTNode {
+public class VariableDeclarationStatement implements ASTNode {
     private String signature;
     private String type;
     private String value;
 
-    public VariableDeclaration(String signature, String type, String value) {
+    public VariableDeclarationStatement(String signature, String type, String value) {
         this.signature = signature;
         this.type = type;
         this.value = value;

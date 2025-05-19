@@ -2,11 +2,11 @@ package ast.TS;
 
 import ast.ASTNode;
 
-public class NgOnInitMethod implements ASTNode {
+public class NgOnInitMethodStatement implements ASTNode {
     private String accessModifier; // Can be null
     private MethodVoidBody body;
 
-    public NgOnInitMethod(String accessModifier, MethodVoidBody body) {
+    public NgOnInitMethodStatement(String accessModifier, MethodVoidBody body) {
         this.accessModifier = accessModifier;
         this.body = body;
     }

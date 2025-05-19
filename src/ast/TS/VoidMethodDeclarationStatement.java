@@ -2,12 +2,12 @@ package ast.TS;
 
 import ast.ASTNode;
 
-public class MethodVoid implements ASTNode {
+public class VoidMethodDeclarationStatement implements ASTNode {
     private Signature signature;
     private Parameters parameters; // Can be null
     private MethodVoidBody body;
 
-    public MethodVoid(Signature signature, Parameters parameters, MethodVoidBody body) {
+    public VoidMethodDeclarationStatement(Signature signature, Parameters parameters, MethodVoidBody body) {
         this.signature = signature;
         this.parameters = parameters;
         this.body = body;

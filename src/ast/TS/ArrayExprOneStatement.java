@@ -3,11 +3,11 @@ package ast.TS;
 import ast.ASTNode;
 import java.util.List;
 
-public class ArrayExpression1 implements ASTNode {
+public class ArrayExprOneStatement implements ASTNode {
     private Signature signature;
     private List<ASTNode> elements;
 
-    public ArrayExpression1(Signature signature, List<ASTNode> elements) {
+    public ArrayExprOneStatement(Signature signature, List<ASTNode> elements) {
         this.signature = signature;
         this.elements = elements;
     }

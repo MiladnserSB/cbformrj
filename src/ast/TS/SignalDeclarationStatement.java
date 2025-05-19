@@ -2,12 +2,12 @@ package ast.TS;
 
 import ast.ASTNode;
 
-public class SignalDeclaration implements ASTNode {
+public class SignalDeclarationStatement implements ASTNode {
     private String name;
     private String signalType; // Value of CROISNN, e.g. "signal"
     private String argument;   // The string literal passed to the signal
 
-    public SignalDeclaration(String name, String signalType, String argument) {
+    public SignalDeclarationStatement(String name, String signalType, String argument) {
         this.name = name;
         this.signalType = signalType;
         this.argument = argument;

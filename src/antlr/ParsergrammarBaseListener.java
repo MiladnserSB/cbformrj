@@ -41,6 +41,18 @@ public class ParsergrammarBaseListener implements ParsergrammarListener {
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
+	@Override public void enterTsDocumentStatement(Parsergrammar.TsDocumentStatementContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitTsDocumentStatement(Parsergrammar.TsDocumentStatementContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
 	@Override public void enterClassDeclaration(Parsergrammar.ClassDeclarationContext ctx) { }
 	/**
 	 * {@inheritDoc}
@@ -72,6 +84,114 @@ public class ParsergrammarBaseListener implements ParsergrammarListener {
 	 * <p>The default implementation does nothing.</p>
 	 */
 	@Override public void exitClassBody(Parsergrammar.ClassBodyContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void enterVariableAssignmentStatement(Parsergrammar.VariableAssignmentStatementContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitVariableAssignmentStatement(Parsergrammar.VariableAssignmentStatementContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void enterVoidMethodDeclarationStatement(Parsergrammar.VoidMethodDeclarationStatementContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitVoidMethodDeclarationStatement(Parsergrammar.VoidMethodDeclarationStatementContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void enterVariableDeclarationStatement(Parsergrammar.VariableDeclarationStatementContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitVariableDeclarationStatement(Parsergrammar.VariableDeclarationStatementContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void enterArrayExprOneStatement(Parsergrammar.ArrayExprOneStatementContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitArrayExprOneStatement(Parsergrammar.ArrayExprOneStatementContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void enterArrayExprTwoStatement(Parsergrammar.ArrayExprTwoStatementContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitArrayExprTwoStatement(Parsergrammar.ArrayExprTwoStatementContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void enterTypedMethodDeclarationStatement(Parsergrammar.TypedMethodDeclarationStatementContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitTypedMethodDeclarationStatement(Parsergrammar.TypedMethodDeclarationStatementContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void enterConstructorDeclarationStatement(Parsergrammar.ConstructorDeclarationStatementContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitConstructorDeclarationStatement(Parsergrammar.ConstructorDeclarationStatementContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void enterSignalDeclarationStatement(Parsergrammar.SignalDeclarationStatementContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitSignalDeclarationStatement(Parsergrammar.SignalDeclarationStatementContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void enterNgOnInitMethodStatement(Parsergrammar.NgOnInitMethodStatementContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitNgOnInitMethodStatement(Parsergrammar.NgOnInitMethodStatementContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *

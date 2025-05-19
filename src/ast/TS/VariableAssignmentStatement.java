@@ -2,11 +2,11 @@ package ast.TS;
 
 import ast.ASTNode;
 
-public class VariableAssign implements ASTNode {
+public class VariableAssignmentStatement implements ASTNode {
     private String identifier;
     private String value;
 
-    public VariableAssign(String identifier, String value) {
+    public VariableAssignmentStatement(String identifier, String value) {
         this.identifier = identifier;
         this.value = value;
     }
